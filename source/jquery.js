@@ -129,15 +129,41 @@ $(document).ready(function () {
     var dl = $(this);
     var alldd = dl.find("dd");
     var alldt = dl.find("dt");
-    alldd.hide();
-    alldt.css({ cursor: "pointer" });
+    function closeAll() {
+      alldd.addClass("closed");
+      alldt.addClass("closed");
+    }
+    function open(dt, dd) {
+      dt.removeClass("closed");
+      dd.removeClass("closed");
+    }
+    closeAll();
     alldt.click(function () {
-      alldd.hide();
       var dt = $(this);
       var dd = dt.next();
-      dd.show();
-      alldt.css({ cursor: "pointer" });
-      dt.css({ cursor: "default" });
+      closeAll();
+      open(dt, dd);
     });
+  });
+
+  var interval = 3000;
+  $(".slideshow").each(function () {
+    var container = $(this);
+    function swtichImg() {
+      var imgs = container.find("img");
+      var first = imgs.eq(0);
+      var second = imgs.eq(1);
+      first.appendTo(container).fadeOut(2000);
+      second.fadeIn();
+    }
+    function startTimer() {
+      timer = setInterval(swtichImg, interval);
+    }
+    function stopTimer() {
+      clearInterval(timer);
+    }
+
+    container.hover(stopTimer, startTimer);
+    startTimer();
   });
 });
