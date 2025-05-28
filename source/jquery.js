@@ -166,4 +166,45 @@ $(document).ready(function () {
     container.hover(stopTimer, startTimer);
     startTimer();
   });
+
+  $("#getText1").on("click",function(){
+    $("#textbox").text("글자 입력 테스트");
+    var req = $.ajax({url:"data.txt", dataType:"json"});
+    req.done(function(data,status){
+      // var students = JSON.parse(data);
+      for(var i = 0; i<data.length; i++){
+        var str = "<br>" + data[i].name ;
+        $("#textbox").append(str);
+      }
+    });
+  });
+
+  $("#getText2").on("click",function(){
+    var tb = $("<table/>");
+    var req = $.ajax({url:"data.txt", dataType:"json"});
+
+    var row=$("<tr/>").append(
+        $("<th/>").text("이름"),
+        $("<th/>").text("아이디"),
+        $("<th/>").text("학과"),
+        $("<th/>").text("수강과목")
+      );
+
+    tb.append(row);
+    req.done(function(data,status){
+      // var students = JSON.parse(data);
+      for(var i = 0; i<data.length; i++){
+        var phone = data[i].phone;
+        var row=$("<tr/>").append(
+        $("<td/>").text(data[i].name),
+        $("<td/>").text(data[i].id),
+        $("<td/>").text(data[i].department),
+        $("<td/>").text(data[i].class)
+      );
+        tb.append(row);
+      }
+      $("#textbox").append(tb);
+    });
+
+  });
 });
