@@ -203,7 +203,7 @@ $(document).ready(function () {
         );
         tb.append(row);
       }
-      $("#textbox").html(tb);
+      $("#textbox").append(tb);
     });
   });
   var req = $.ajax({
