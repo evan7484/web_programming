@@ -2,13 +2,21 @@ var express = require("express"),
   http = require("http"),
   path = require("path");
 
+const https = require("https");
+const fs = require("fs");
+
 var static = require("serve-static");
+
+const options = {
+  key: fs.readFileSync("cert.key"),
+  cert: fs.readFileSync("cert.crt")
+};
 
 var app = express();
 var router = express.Router();
 
 app.set("port", process.env.PORT || 8080);
-app.set("host", "127.0.0.1");
+app.set("host", "172.16.164.84");
 
 app.use(static(__dirname));
 // app.use(express.urlencoded());
@@ -41,4 +49,10 @@ http.createServer(app).listen(app.get("port"), app.get("host"), () => {
   console.log("Express server running at" + app.get("port") + app.get("host"));
 });
 
-//http://localhost:8080/source/jquery.html
+const PORT = 8000;
+https.createServer(options, app).listen(PORT, app.get("host"),()=>{
+  console.log("Express HTTPS server running at" + PORT + app.get("hostname"));
+});
+
+// npm install express --save
+// npm install serve-static --save
