@@ -167,44 +167,53 @@ $(document).ready(function () {
     startTimer();
   });
 
-  $("#getText1").on("click",function(){
+  $("#getText1").on("click", function () {
     $("#textbox").text("글자 입력 테스트");
-    var req = $.ajax({url:"data.txt", dataType:"json"});
-    req.done(function(data,status){
+    var req = $.ajax({ url: "data.txt", dataType: "json" });
+    req.done(function (data, status) {
       // var students = JSON.parse(data);
-      for(var i = 0; i<data.length; i++){
-        var str = "<br>" + data[i].name ;
+      for (var i = 0; i < data.length; i++) {
+        var str = "<br>" + data[i].name;
         $("#textbox").append(str);
       }
     });
   });
 
-  $("#getText2").on("click",function(){
+  $("#getText2").on("click", function () {
     var tb = $("<table/>");
-    var req = $.ajax({url:"data.txt", dataType:"json"});
+    var req = $.ajax({ url: "data.txt", dataType: "json" });
 
-    var row=$("<tr/>").append(
-        $("<th/>").text("이름"),
-        $("<th/>").text("아이디"),
-        $("<th/>").text("학과"),
-        $("<th/>").text("수강과목")
-      );
+    var row = $("<tr/>").append(
+      $("<th/>").text("이름"),
+      $("<th/>").text("아이디"),
+      $("<th/>").text("학과"),
+      $("<th/>").text("수강과목")
+    );
 
     tb.append(row);
-    req.done(function(data,status){
+    req.done(function (data, status) {
       // var students = JSON.parse(data);
-      for(var i = 0; i<data.length; i++){
+      for (var i = 0; i < data.length; i++) {
         var phone = data[i].phone;
-        var row=$("<tr/>").append(
-        $("<td/>").text(data[i].name),
-        $("<td/>").text(data[i].id),
-        $("<td/>").text(data[i].department),
-        $("<td/>").text(data[i].class)
-      );
+        var row = $("<tr/>").append(
+          $("<td/>").text(data[i].name),
+          $("<td/>").text(data[i].id),
+          $("<td/>").text(data[i].department),
+          $("<td/>").text(data[i].class)
+        );
         tb.append(row);
       }
       $("#textbox").append(tb);
     });
-
+  });
+  var req = $.ajax({
+    url: "/rss",
+    dataType: "xml",
+  });
+  req.done(function (data) {
+    console.log(data);
+  });
+  req.fail(function (jqXHR, textStatus) {
+    alert("failed: " + textStatus);
   });
 });
