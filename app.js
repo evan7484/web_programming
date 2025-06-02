@@ -9,7 +9,7 @@ var static = require("serve-static");
 
 const options = {
   key: fs.readFileSync("cert.key"),
-  cert: fs.readFileSync("cert.crt")
+  cert: fs.readFileSync("cert.crt"),
 };
 
 var app = express();
@@ -39,6 +39,21 @@ app.use(static(__dirname));
 router.route("/routetest").get(function (req, res) {
   res.redirect("http://www.google.com");
 });
+router.route("/rss").get(function (req, res) {
+  console.log("rss data requested");
+  var feed = "https://news.sbs.co.kr/news/headlineRssFeed.do?plink=RSSREADER";
+  https.get(feed, function (httpres) {
+    var rss_res = "";
+    httpres.on("data", function (chunk) {
+      rss_res += chunk;
+    });
+    httpres.on("end", function () {
+      res.send(rss_res);
+      console.log("rss response completed");
+      res.end();
+    });
+  });
+});
 app.use("/", router);
 
 app.use(function (req, res) {
@@ -50,7 +65,7 @@ http.createServer(app).listen(app.get("port"), app.get("host"), () => {
 });
 
 const PORT = 8000;
-https.createServer(options, app).listen(PORT, app.get("host"),()=>{
+https.createServer(options, app).listen(PORT, app.get("host"), () => {
   console.log("Express HTTPS server running at" + PORT + app.get("hostname"));
 });
 
