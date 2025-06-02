@@ -148,6 +148,7 @@ $(document).ready(function () {
 
   var interval = 3000;
   $(".slideshow").each(function () {
+    var timer;
     var container = $(this);
     function swtichImg() {
       var imgs = container.find("img");
