@@ -181,6 +181,7 @@ $(document).ready(function () {
   });
 
   $("#getText2").on("click", function () {
+    $("#textbox").empty();
     var tb = $("<table/>");
     var req = $.ajax({ url: "data.txt", dataType: "json" });
 
@@ -207,6 +208,7 @@ $(document).ready(function () {
       $("#textbox").append(tb);
     });
   });
+
   var req = $.ajax({
     url: "/rss",
     dataType: "xml",

@@ -41,8 +41,7 @@ router.route("/routetest").get(function (req, res) {
 });
 router.route("/rss").get(function (req, res) {
   console.log("rss data requested");
-  var feed =
-    "https://www.youtube.com/feeds/videos.xml?chanel_id=UCrDa_5OU-rhvXqWlPx5hgKQ";
+  var feed = "https://news.sbs.co.kr/news/headlineRssFeed.do?plink=RSSREADER";
   https.get(feed, function (httpres) {
     var rss_res = "";
     httpres.on("data", function (chunk) {
